@@ -1,0 +1,29 @@
+{
+  "name": "quantities",
+  "version": "0.0.0",
+  "description": "Physical quantity representation and conversion",
+  "main": "quantities.js",
+  "scripts": {
+    "test": "istanbul cover _mocha -- -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rvagg/quantities.git"
+  },
+  "keywords": [
+    "quantity",
+    "conversion",
+    "units"
+  ],
+  "author": "Rod Vagg <r@va.gg>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rvagg/quantities/issues"
+  },
+  "homepage": "https://github.com/rvagg/quantities",
+  "devDependencies": {
+    "mocha": "~1.15.1",
+    "chai": "~1.8.1",
+    "istanbul": "~0.1.46"
+  }
+}
