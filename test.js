@@ -36,15 +36,15 @@ describe('Quantity', function () {
       'does not throw error when same unknown units converted');
   });
 
-  describe('conversions', function () {
+  function testConversion (srcQuantity, dstValue, dstUnits) {
+    var quantity = srcQuantity.convertTo(dstUnits);
+    assert.instanceOf(quantity, Quantity, 'is instance of Quantity');
+    assert.equal(quantity.units, dstUnits, 'converted has ' + dstUnits + ' units');
+    assert(Math.abs(quantity.value - dstValue) < 0.001,
+        'converted to ' + dstUnits + ' correctly, actual: ' + quantity.value + ', expected: ' + dstValue);
+  }
 
-    function testConversion (srcQuantity, dstValue, dstUnits) {
-      var quantity = srcQuantity.convertTo(dstUnits);
-      assert.instanceOf(quantity, Quantity, 'is instance of Quantity');
-      assert.equal(quantity.units, dstUnits, 'converted has ' + dstUnits + ' units');
-      assert(Math.abs(quantity.value - dstValue) < 0.001,
-          'converted to ' + dstUnits + ' correctly, actual: ' + quantity.value + ', expected: ' + dstValue);
-    }
+  describe('conversions', function () {
 
     it('should convert from kilograms to pounds', function () {
       testConversion(new Quantity(101, Quantity.KG), 222.667, Quantity.LB);
@@ -107,6 +107,23 @@ describe('Quantity', function () {
       it('should convert from ' + unit + ' to ' + unit + ' and remain the same', function () {
         testConversion(unit);
       });
+    });
+
+  });
+
+  describe('convert same quantity to different units', function () {
+    var quantity = new Quantity(101, Quantity.M);
+
+    it('should convert to cm', function () {
+      testConversion(quantity, 10100, Quantity.CM);
+    });
+
+    it('should convert to mm', function () {
+      testConversion(quantity, 101000, Quantity.MM);
+    });
+
+    it('should convert to inches', function () {
+      testConversion(quantity, 3976.378, Quantity.IN);
     });
 
   });
