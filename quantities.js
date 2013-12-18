@@ -10,12 +10,13 @@
 
 // Boilerplate for browser stand-alone, CommonJS and AMD use
 (function (name, context, definition) {
-  if (typeof module != 'undefined' && module.exports)
+  if (typeof module != 'undefined' && module.exports) {
     module.exports = definition();
-  else if (typeof define == 'function' && define.amd)
+  } else if (typeof define == 'function' && define.amd) {
     define(definition);
-  else
+  } else {
     context[name] = definition();
+  }
 })('Quantity', this, function () {
 
 //-----------------------------------------------------------------------------//
@@ -23,9 +24,9 @@
 //-----------------------------------------------------------------------------//
 
   function Quantity (value, units) {
-    if (!(this instanceof Quantity))
+    if (!(this instanceof Quantity)) {
       return new Quantity(value, units);
-
+    }
     this.value = value;
     this.units = units;
   }
@@ -46,16 +47,19 @@
   toInternalUnits[Quantity.IN] = 25.4 / 1000;
 
   Quantity.prototype.convertTo = function (units) {
-    if (this.units == units)
+    if (this.units == units) {
       return this;
-
-    if (!toInternalUnits[this.units] || !toInternalUnits[units])
+    }
+    
+    if (!toInternalUnits[this.units] || !toInternalUnits[units]) {
       throw new TypeError('Unknown units: ' + this.units + ' to ' + units);
+    }
 
     //TODO: check for conversion from weight to length and throw
 
-    if (typeof this._internalUnits != 'number')
+    if (typeof this._internalUnits != 'number') {
       this._internalUnits = this.value * toInternalUnits[this.units];
+    }
 
     return new Quantity(this._internalUnits * (1 / toInternalUnits[units]), units);
   };
